@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IFI Infrastructure Modernization Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        .gradient-bg {
+            background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .tab-active {
+            border-bottom: 3px solid #3b82f6;
+            color: #1d4ed8;
+            font-weight: 700;
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 min-h-screen font-sans text-gray-900">
+
+    <!-- Header Section -->
+    <header class="gradient-bg text-white py-12 px-6 shadow-lg">
+        <div class="max-w-6xl mx-auto">
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-center">
+                <div>
+                    <h1 class="text-4xl font-extrabold mb-2 tracking-tight">IFI Infrastructure Modernization 2026</h1>
+                    <p class="text-blue-100 text-lg max-w-2xl opacity-90 leading-relaxed">
+                        Full 16-Platform Analysis & Strategic Project Canvas
+                    </p>
+                </div>
+                <div class="mt-4 md:mt-0 bg-white/10 p-3 rounded-lg backdrop-blur-sm border border-white/20">
+                    <p class="text-xs uppercase font-bold tracking-widest text-blue-200">Stakeholder Focus</p>
+                    <p class="text-sm">Scott (COO) • Alex (CTO) • Matthew</p>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto px-6 -mt-8 pb-20">
+        
+        <!-- Navigation Tabs -->
+        <nav class="flex space-x-8 border-b border-gray-200 mb-8 overflow-x-auto glass-card rounded-t-xl px-6 pt-4 sticky top-0 z-20 shadow-sm">
+            <button onclick="showTab('canvas')" id="tab-canvas" class="pb-3 text-sm uppercase tracking-wider font-semibold tab-active transition-all whitespace-nowrap">Project Canvas</button>
+            <button onclick="showTab('visuals')" id="tab-visuals" class="pb-3 text-sm uppercase tracking-wider font-semibold text-gray-500 hover:text-blue-600 transition-all whitespace-nowrap">Visual Market Analysis</button>
+            <button onclick="showTab('comparison')" id="tab-comparison" class="pb-3 text-sm uppercase tracking-wider font-semibold text-gray-500 hover:text-blue-600 transition-all whitespace-nowrap">16-Platform Explorer</button>
+            <button onclick="showTab('roadmap')" id="tab-roadmap" class="pb-3 text-sm uppercase tracking-wider font-semibold text-gray-500 hover:text-blue-600 transition-all whitespace-nowrap">Roadmap</button>
+        </nav>
+
+        <!-- Tab: Project Canvas -->
+        <div id="content-canvas" class="space-y-8 animate-in fade-in duration-500">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <section class="glass-card p-8 rounded-2xl shadow-sm border border-gray-100">
+                    <h2 class="text-xl font-bold text-blue-900 mb-4 flex items-center">
+                        <span class="mr-2">🎯</span> Mission & Problem Statement
+                    </h2>
+                    <ul class="space-y-3">
+                        <li class="flex items-start">
+                            <span class="text-red-500 font-bold mr-2 text-xl">•</span>
+                            <span class="text-sm"><strong>Security Gap:</strong> 100+ endpoints unmanaged; BitLocker status unverified for 2026 Insurance.</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-red-500 font-bold mr-2 text-xl">•</span>
+                            <span class="text-sm"><strong>Win 11 Readiness:</strong> Manual inventory creates "Matthew Bottleneck" for 2026 migration.</span>
+                        </li>
+                    </ul>
+                </section>
+                <section class="glass-card p-8 rounded-2xl shadow-sm border border-gray-100">
+                    <h2 class="text-xl font-bold text-blue-900 mb-4 flex items-center">
+                        <span class="mr-2">📈</span> Success Metrics
+                    </h2>
+                    <div class="grid grid-cols-2 gap-4 text-center">
+                        <div class="bg-blue-50 p-4 rounded-xl border border-blue-100">
+                            <p class="text-2xl font-black text-blue-900">100%</p>
+                            <p class="text-xs text-blue-700 font-bold">Audit Readiness</p>
+                        </div>
+                        <div class="bg-green-50 p-4 rounded-xl border border-green-100">
+                            <p class="text-2xl font-black text-green-900">0%</p>
+                            <p class="text-xs text-green-700 font-bold">Manual Sheets</p>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+
+        <!-- Tab: Visual Market Analysis -->
+        <div id="content-visuals" class="hidden space-y-8 animate-in fade-in duration-500">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <!-- Pie Chart: Recommendation Categories -->
+                <div class="glass-card p-8 rounded-2xl shadow-sm border border-gray-100">
+                    <h3 class="text-lg font-bold text-blue-900 mb-6">Market Distribution by Primary Focus</h3>
+                    <canvas id="categoryChart" height="250"></canvas>
+                </div>
+                <!-- Radar: Security vs Friction (Top 5) -->
+                <div class="glass-card p-8 rounded-2xl shadow-sm border border-gray-100">
+                    <h3 class="text-lg font-bold text-blue-900 mb-6">Top Picks Performance: Security vs. User Friction</h3>
+                    <canvas id="radarChart" height="250"></canvas>
+                </div>
+            </div>
+            
+            <div class="glass-card p-8 rounded-2xl shadow-sm border border-gray-100">
+                <h3 class="text-lg font-bold text-blue-900 mb-4">Implementation Scorecard (16 Platforms)</h3>
+                <div class="overflow-x-auto">
+                    <canvas id="barChart" height="150"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tab: Comparison Explorer -->
+        <div id="content-comparison" class="hidden space-y-6 animate-in fade-in duration-500">
+            <div class="glass-card p-6 rounded-2xl shadow-sm border border-gray-100">
+                <div class="flex justify-between items-center mb-6">
+                    <div>
+                        <h2 class="text-2xl font-bold text-blue-900">Full 16-Platform Explorer</h2>
+                        <p class="text-sm text-gray-500">Comprehensive data from 2026 RMM Analysis Spreadsheet</p>
+                    </div>
+                    <div class="flex space-x-2">
+                        <span class="flex items-center text-xs font-bold text-yellow-600 bg-yellow-50 px-2 py-1 rounded border border-yellow-200">
+                            <span class="w-2 h-2 bg-yellow-400 rounded-full mr-2"></span> Top Stakeholder Choice
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+                    <!-- Platform List -->
+                    <div class="lg:col-span-3 border-r border-gray-100 pr-4 max-h-[700px] overflow-y-auto custom-scrollbar space-y-2" id="platform-list">
+                        <!-- JS injected list -->
+                    </div>
+                    <!-- Details View -->
+                    <div class="lg:col-span-9 p-8 bg-white rounded-xl border border-gray-50 shadow-inner min-h-[500px]" id="platform-details">
+                        <div class="flex flex-col items-center justify-center h-full text-gray-400 space-y-4">
+                            <svg class="w-16 h-16 opacity-20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"></path></svg>
+                            <p class="italic">Select a platform from the explorer to view detailed technical specifications...</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tab: Roadmap -->
+        <div id="content-roadmap" class="hidden space-y-8 animate-in fade-in duration-500">
+            <div class="glass-card p-8 rounded-2xl shadow-sm border border-gray-100">
+                <h2 class="text-2xl font-bold text-blue-900 mb-8">2026 Infrastructure Roadmap</h2>
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                    <div class="border-l-4 border-blue-600 pl-4 py-2">
+                        <p class="text-xs font-bold text-blue-600 uppercase tracking-widest">Weeks 1-3</p>
+                        <h4 class="font-bold text-gray-900">Silent Deployment</h4>
+                        <p class="text-xs text-gray-500 mt-1">RMM Agent rollout with Privacy Consent active.</p>
+                    </div>
+                    <div class="border-l-4 border-blue-400 pl-4 py-2">
+                        <p class="text-xs font-bold text-blue-400 uppercase tracking-widest">Weeks 4-6</p>
+                        <h4 class="font-bold text-gray-900">Agentic Audit</h4>
+                        <p class="text-xs text-gray-500 mt-1">Automated TPM/CPU check for Win 11 budget.</p>
+                    </div>
+                    <div class="border-l-4 border-blue-300 pl-4 py-2">
+                        <p class="text-xs font-bold text-blue-300 uppercase tracking-widest">Weeks 7-10</p>
+                        <h4 class="font-bold text-gray-900">Hardening</h4>
+                        <p class="text-xs text-gray-500 mt-1">BitLocker force & Recovery Key escrow.</p>
+                    </div>
+                    <div class="border-l-4 border-blue-100 pl-4 py-2">
+                        <p class="text-xs font-bold text-blue-100 uppercase tracking-widest">Months 4-6</p>
+                        <h4 class="font-bold text-gray-900">Modernization</h4>
+                        <p class="text-xs text-gray-500 mt-1">OS Migration and hardware refresh cycle.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        const platforms = [
+            { 
+                name: "NinjaOne", isTop: true, tagline: "Best for Architecture", price: "~$3.00–$3.75/endpoint", 
+                bitlocker: "Native Scripting + Escrow: Automates encryption via TPM 2.0; stores keys in JSM Assets.",
+                health: "High (Continuous): Automated, scheduled compliance reports for insurance proof.",
+                privacy: "High Control: Features 'Privacy Mode' and custom 'Snooze' logic for user reboots.",
+                jsm: "Advanced: Native two-way sync; assets appear directly in JSM tickets.",
+                win11: "Deep: Dedicated compatibility audit scripts in library.",
+                link: "https://www.ninjaone.com", securityScore: 9, frictionScore: 3
+            },
+            { 
+                name: "Action1", isTop: true, tagline: "Best for Budget", price: "Free for first 100 endpoints", 
+                bitlocker: "Real-time Remediation: Cloud-native engine specializing in risk-based patching.",
+                health: "High (Zero-Trust): Real-time dashboard showing out-of-compliance remote devices.",
+                privacy: "Moderate: Standard Windows notifications; background patching focus.",
+                jsm: "Moderate: API-based; requires manual setup for asset sync.",
+                win11: "Excellent: Templates for TPM 2.0 and CPU generation checks.",
+                link: "https://www.action1.com", securityScore: 8, frictionScore: 5
+            },
+            { 
+                name: "Hexnode", isTop: true, tagline: "Best for Compliance/macOS", price: "~$2.20/endpoint", 
+                bitlocker: "Native UEM Policies: Forces encryption via profiles; blocks non-compliant devices.",
+                health: "High (Certificates): Gold-standard compliance certificates for underwriters.",
+                privacy: "The 'Gold Standard': Zero-touch privacy profiles and mandatory AUP acceptance.",
+                jsm: "Moderate: Syncs asset data but lacks deep ticket loops.",
+                win11: "Native UEM Reporting: High-fidelity hardware data.",
+                link: "https://www.hexnode.com", securityScore: 9, frictionScore: 2
+            },
+            { 
+                name: "Astera", isTop: true, tagline: "Best for Custom Data Pipelines", price: "Enterprise Quotes Only", 
+                bitlocker: "Passive Only: Requires building custom data pipeline to monitor encryption.",
+                health: "Technical: Inappropriate for endpoint auditing unless used as a warehouse.",
+                privacy: "Technical: No native user interface; users won't know it's running.",
+                jsm: "Deep API: Possible for custom JSM workflows at a data level.",
+                win11: "Custom: Requires building custom data pipelines to visualize health.",
+                link: "https://www.astera.com", securityScore: 4, frictionScore: 10
+            },
+            { 
+                name: "Directus (Custom API)", isTop: true, tagline: "Headless Data Build", price: "$0 (Dev Hours Only)", 
+                bitlocker: "Manual/Scripted: Monitoring depends entirely on custom code Matthew maintains.",
+                health: "Technical Debt: Audit readiness relies on manual logging scripts.",
+                privacy: "Manual: No native snooze button or notification system.",
+                jsm: "Complex: Requires custom middleware to sync items.",
+                win11: "Custom Build: Requires custom agent/script to collect specs.",
+                link: "https://directus.io", securityScore: 5, frictionScore: 8
+            },
+            { name: "Atera", tagline: "Per-Tech Efficiency", price: "$129/tech", bitlocker: "AI-Assisted Remediation", health: "Moderate-High (Logged)", privacy: "High Transparency", jsm: "Strong Native App", win11: "Built-in Dashboard", securityScore: 7, frictionScore: 4 },
+            { name: "MSP360", tagline: "Backup-First RMM", price: "Budget Friendly", bitlocker: "Script-based", health: "Moderate (Point-in-Time)", privacy: "Basic", jsm: "Moderate (Webhooks)", win11: "Standard View", securityScore: 6, frictionScore: 6 },
+            { name: "Syncro", tagline: "Combined PSA/RMM", price: "~$129/tech", bitlocker: "Script-based (Reactive)", health: "Moderate (Summary)", privacy: "Moderate", jsm: "Zapier-based", win11: "Standard Inventory", securityScore: 5, frictionScore: 5 },
+            { name: "Datto RMM", tagline: "MSP Ecosystem Power", price: "~$2.99/device", bitlocker: "Ransomware + Encryption", health: "High (Integrated)", privacy: "High Control", jsm: "Advanced (Bridge)", win11: "Native View", securityScore: 8, frictionScore: 3 },
+            { name: "RustDesk", tagline: "Open Source Remote", price: "Free (Self-Hosted)", bitlocker: "None", health: "Low", privacy: "Low", jsm: "None", win11: "None", securityScore: 2, frictionScore: 9 },
+            { name: "Snipe-IT", tagline: "Asset Management Only", price: "Free/Self-Hosted", bitlocker: "Passive Only", health: "Moderate (Inventory)", privacy: "N/A", jsm: "Strong API", win11: "Manual Entry", securityScore: 3, frictionScore: 1 },
+            { name: "Pulseway", tagline: "Mobile-First Admin", price: "~$2/device", bitlocker: "Script-based", health: "Moderate (Real-Time)", privacy: "Moderate", jsm: "Moderate (Webhooks)", win11: "Built-in Reporting", securityScore: 6, frictionScore: 5 },
+            { name: "GoTo Resolve", tagline: "Simplified Support", price: "Starts ~$7/mo", bitlocker: "Script-based", health: "Low-Moderate", privacy: "Moderate", jsm: "Basic", win11: "Standard Inventory", securityScore: 4, frictionScore: 4 },
+            { name: "ConnectWise", tagline: "Legacy Enterprise Giant", price: "High Custom Quotes", bitlocker: "Native Security Suite", health: "High (Granular)", privacy: "High Control", jsm: "Advanced", win11: "Advanced Engine", securityScore: 9, frictionScore: 4 },
+            { name: "Kaseya VSA", tagline: "Deeply Scalable", price: "Custom Quotes", bitlocker: "Native Scripting", health: "High (Certified)", privacy: "High Control", jsm: "Complex Plugin", win11: "Advanced Audit", securityScore: 8, frictionScore: 4 },
+            { name: "SuperOps", tagline: "Modern AI-Native UI", price: "~$149/tech", bitlocker: "AI Script Assistance", health: "Moderate-High", privacy: "Moderate-High", jsm: "Developing", win11: "AI-driven Audit", securityScore: 7, frictionScore: 3 }
+        ];
+
+        function showTab(tab) {
+            document.querySelectorAll('main > div').forEach(el => el.classList.add('hidden'));
+            document.getElementById('content-' + tab).classList.remove('hidden');
+            document.querySelectorAll('nav button').forEach(el => el.classList.remove('tab-active', 'text-blue-600'));
+            document.getElementById('tab-' + tab).classList.add('tab-active');
+            if(tab === 'visuals') initCharts();
+        }
+
+        function renderPlatforms() {
+            const list = document.getElementById('platform-list');
+            platforms.forEach((p, idx) => {
+                const btn = document.createElement('button');
+                btn.className = `w-full text-left p-3 rounded-lg border transition-all group ${p.isTop ? 'bg-yellow-50 border-yellow-100 hover:bg-yellow-100' : 'bg-white border-gray-100 hover:bg-blue-50'}`;
+                btn.innerHTML = `
+                    <div class="flex justify-between items-center">
+                        <div class="font-bold text-blue-900">${p.name}</div>
+                        ${p.isTop ? '<span class="text-[10px] bg-yellow-400 text-white px-1 rounded uppercase font-black">Top</span>' : ''}
+                    </div>
+                    <div class="text-[10px] text-gray-500 group-hover:text-blue-600 truncate">${p.tagline}</div>
+                `;
+                btn.onclick = () => selectPlatform(idx);
+                list.appendChild(btn);
+            });
+        }
+
+        function selectPlatform(idx) {
+            const p = platforms[idx];
+            const details = document.getElementById('platform-details');
+            details.innerHTML = `
+                <div class="animate-in slide-in-from-right duration-300">
+                    <div class="flex justify-between items-start mb-6">
+                        <div>
+                            <div class="flex items-center space-x-2">
+                                <h3 class="text-3xl font-black text-blue-900">${p.name}</h3>
+                                ${p.isTop ? '<span class="bg-yellow-400 text-white text-xs px-2 py-1 rounded-full font-bold uppercase tracking-tighter">Strategic Recommendation</span>' : ''}
+                            </div>
+                            <p class="text-blue-600 font-semibold mt-1">${p.tagline}</p>
+                        </div>
+                        <div class="text-right">
+                             <span class="block bg-gray-100 text-gray-800 px-3 py-1 rounded-lg text-xs font-bold uppercase">${p.price}</span>
+                             <a href="${p.link}" target="_blank" class="text-xs text-blue-500 underline mt-2 inline-block">Visit Product Website</a>
+                        </div>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mt-4">
+                        <div class="space-y-6">
+                            <div class="p-4 bg-blue-50/50 rounded-xl border border-blue-100">
+                                <h4 class="text-xs font-bold uppercase text-blue-900 mb-2">Security & Compliance</h4>
+                                <div class="space-y-3">
+                                    <div>
+                                        <p class="text-[10px] font-bold text-gray-400 uppercase">BitLocker / PII Enforcement</p>
+                                        <p class="text-sm text-gray-700 font-medium">${p.bitlocker}</p>
+                                    </div>
+                                    <div>
+                                        <p class="text-[10px] font-bold text-gray-400 uppercase">Audit Readiness (Insurance)</p>
+                                        <p class="text-sm text-gray-700 font-medium">${p.health}</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="p-4 bg-gray-50 rounded-xl border border-gray-100">
+                                <h4 class="text-xs font-bold uppercase text-gray-900 mb-2">Integration Depth</h4>
+                                <div class="space-y-3">
+                                    <div>
+                                        <p class="text-[10px] font-bold text-gray-400 uppercase">Jira Service Management (JSM)</p>
+                                        <p class="text-sm text-gray-700 font-medium">${p.jsm || "Standard Integration"}</p>
+                                    </div>
+                                    <div>
+                                        <p class="text-[10px] font-bold text-gray-400 uppercase">Windows 11 Readiness Audit</p>
+                                        <p class="text-sm text-gray-700 font-medium">${p.win11 || "Standard Hardware Inventory"}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="space-y-6">
+                            <div class="p-4 bg-green-50/50 rounded-xl border border-green-100 h-full">
+                                <h4 class="text-xs font-bold uppercase text-green-900 mb-2">User Experience & Friction</h4>
+                                <p class="text-sm text-gray-700 leading-relaxed mb-4">${p.privacy}</p>
+                                <div class="grid grid-cols-2 gap-4">
+                                    <div class="bg-white p-2 rounded-lg text-center">
+                                        <p class="text-[10px] text-gray-400 font-bold uppercase">Security Score</p>
+                                        <p class="text-xl font-black text-blue-600">${p.securityScore}/10</p>
+                                    </div>
+                                    <div class="bg-white p-2 rounded-lg text-center">
+                                        <p class="text-[10px] text-gray-400 font-bold uppercase">User Friction</p>
+                                        <p class="text-xl font-black ${p.frictionScore < 5 ? 'text-green-600' : 'text-red-600'}">${p.frictionScore}/10</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        let chartsInited = false;
+        function initCharts() {
+            if(chartsInited) return;
+            chartsInited = true;
+
+            // Category Pie Chart
+            new Chart(document.getElementById('categoryChart'), {
+                type: 'doughnut',
+                data: {
+                    labels: ['Infrastructure/Security', 'Budget/Small Team', 'Asset Inventory', 'Remote Access Only'],
+                    datasets: [{
+                        data: [7, 5, 2, 2],
+                        backgroundColor: ['#1e3a8a', '#3b82f6', '#10b981', '#94a3b8']
+                    }]
+                },
+                options: { plugins: { legend: { position: 'bottom' } } }
+            });
+
+            // Radar Chart (Top 5)
+            const top5 = platforms.filter(p => p.isTop);
+            new Chart(document.getElementById('radarChart'), {
+                type: 'radar',
+                data: {
+                    labels: top5.map(p => p.name),
+                    datasets: [
+                        { label: 'Security Strength', data: top5.map(p => p.securityScore), borderColor: '#1e3a8a', backgroundColor: 'rgba(30, 58, 138, 0.2)' },
+                        { label: 'User Ease (Low Friction)', data: top5.map(p => 10 - p.frictionScore), borderColor: '#10b981', backgroundColor: 'rgba(16, 185, 129, 0.2)' }
+                    ]
+                },
+                options: { scales: { r: { beginAtZero: true, max: 10 } } }
+            });
+
+            // Bar Chart
+            new Chart(document.getElementById('barChart'), {
+                type: 'bar',
+                data: {
+                    labels: platforms.map(p => p.name),
+                    datasets: [{
+                        label: 'Security & Compliance Maturity Score',
+                        data: platforms.map(p => p.securityScore),
+                        backgroundColor: platforms.map(p => p.isTop ? '#fbbf24' : '#3b82f6')
+                    }]
+                },
+                options: { 
+                    responsive: true,
+                    scales: { y: { beginAtZero: true, max: 10 } },
+                    plugins: { legend: { display: false } }
+                }
+            });
+        }
+
+        window.onload = renderPlatforms;
+    </script>
+</body>
+</html>
